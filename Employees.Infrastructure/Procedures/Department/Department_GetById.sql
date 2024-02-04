@@ -1,0 +1,1 @@
+select * from departments where id = @Id;

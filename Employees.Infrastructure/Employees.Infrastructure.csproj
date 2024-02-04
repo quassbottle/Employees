@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Dapper" Version="2.1.28" />
+      <PackageReference Include="dbup-postgresql" Version="5.0.40" />
+      <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Migrations\Scripts\001_InitTables.sql" />
+      <EmbeddedResource Include="Migrations\Scripts\001_InitTables.sql" />
+      <EmbeddedResource Update="Procedures\SqlProcedures.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>SqlProcedures.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Employees.Domain\Employees.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Procedures\Passport\Passport_Create.sql" />
+      <Resource Include="Procedures\Passport\Passport_Create.sql" />
+      <None Remove="Procedures\Passport\Passport_Delete.sql" />
+      <Resource Include="Procedures\Passport\Passport_Delete.sql" />
+      <None Remove="Procedures\Passport\Passport_GetAll.sql" />
+      <Resource Include="Procedures\Passport\Passport_GetAll.sql" />
+      <None Remove="Procedures\Passport\Passport_GetById.sql" />
+      <Resource Include="Procedures\Passport\Passport_GetById.sql" />
+      <None Remove="Procedures\Passport\Passport_Update.sql" />
+      <Resource Include="Procedures\Passport\Passport_Update.sql" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Procedures\SqlProcedures.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>SqlProcedures.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+</Project>

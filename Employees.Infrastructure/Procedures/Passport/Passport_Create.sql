@@ -1,0 +1,1 @@
+insert into passports(type, phone) values (@Type, @Phone);

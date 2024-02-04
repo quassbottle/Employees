@@ -1,0 +1,1 @@
+delete from departments where id = @Id;

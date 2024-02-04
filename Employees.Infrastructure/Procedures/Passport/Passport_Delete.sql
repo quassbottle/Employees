@@ -1,0 +1,1 @@
+delete from passports where id = @Id;
