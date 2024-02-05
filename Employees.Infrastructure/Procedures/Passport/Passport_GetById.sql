@@ -1,1 +1,1 @@
-select * from passports where id = @Id;
+select p.id, p.number, p.type, p.employee_id from passports p where id = @Id;

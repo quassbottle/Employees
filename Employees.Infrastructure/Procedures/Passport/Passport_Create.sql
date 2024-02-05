@@ -1,1 +1,1 @@
-insert into passports(type, number) values (@Type, @Number) returning id;
+insert into passports(type, number, employee_id) values (@Type, @Number, @EmployeeId) returning id;

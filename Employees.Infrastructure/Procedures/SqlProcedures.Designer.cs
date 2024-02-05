@@ -117,8 +117,8 @@ namespace Employees.Infrastructure.Procedures {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to insert into employees(name, surname, phone, company_id, passport_id, department_id) 
-        ///    values (@Name, @Surname, @Phone, @CompanyId, @PassportId, @DepartmentId)
+        ///   Looks up a localized string similar to insert into employees(name, surname, phone, company_id, department_id) 
+        ///    values (@Name, @Surname, @Phone, @CompanyId, @DepartmentId)
         ///    returning id;.
         /// </summary>
         internal static string Employee_Create {
@@ -137,7 +137,7 @@ namespace Employees.Infrastructure.Procedures {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select e.id, e.name, e.surname, e.phone, e.company_id as CompanyId, e.department_id as DepartmentId, e.passport_id as PassportId 
+        ///   Looks up a localized string similar to select e.id, e.name, e.surname, e.phone, e.company_id as CompanyId, e.department_id as DepartmentId 
         ///from employees e
         ///where company_id = @CompanyId;.
         /// </summary>
@@ -148,7 +148,7 @@ namespace Employees.Infrastructure.Procedures {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select e.id, e.name, e.surname, e.phone, e.company_id as CompanyId, e.department_id as DepartmentId, e.passport_id as PassportId
+        ///   Looks up a localized string similar to select e.id, e.name, e.surname, e.phone, e.company_id as CompanyId, e.department_id as DepartmentId
         ///from employees e
         ///where department_id = @DepartmentId;.
         /// </summary>
@@ -159,7 +159,7 @@ namespace Employees.Infrastructure.Procedures {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select e.id, e.name, e.surname, e.phone, e.company_id as CompanyId, e.department_id as DepartmentId, e.passport_id as PassportId
+        ///   Looks up a localized string similar to select e.id, e.name, e.surname, e.phone, e.company_id as CompanyId, e.department_id as DepartmentId
         ///from employees e
         ///where id = @Id;
         ///.
@@ -176,7 +176,6 @@ namespace Employees.Infrastructure.Procedures {
         ///                     surname = coalesce(@Surname, surname),
         ///                     phone = coalesce(@Phone, phone),
         ///                     company_id = coalesce(@CompanyId, company_id),
-        ///                     passport_id = coalesce(@PassportId, passport_id),
         ///                     department_id = coalesce(@DepartmentId, department_id)
         ///where id = @Id;.
         /// </summary>
@@ -187,7 +186,7 @@ namespace Employees.Infrastructure.Procedures {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to insert into passports(type, number) values (@Type, @Number) returning id;.
+        ///   Looks up a localized string similar to insert into passports(type, number, employee_id) values (@Type, @Number, @EmployeeId) returning id;.
         /// </summary>
         internal static string Passport_Create {
             get {
@@ -214,7 +213,16 @@ namespace Employees.Infrastructure.Procedures {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select * from passports where id = @Id;.
+        ///   Looks up a localized string similar to select p.id, p.number, p.type, p.employee_id from passports p where employee_id = @EmployeeId;.
+        /// </summary>
+        internal static string Passport_GetByEmployeeId {
+            get {
+                return ResourceManager.GetString("Passport_GetByEmployeeId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to select p.id, p.number, p.type, p.employee_id from passports p where id = @Id;.
         /// </summary>
         internal static string Passport_GetById {
             get {

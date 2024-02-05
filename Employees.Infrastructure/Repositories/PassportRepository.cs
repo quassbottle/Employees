@@ -67,4 +67,16 @@ public class PassportRepository : IPassportRepository
         
         await connection.ExecuteAsync(SqlProcedures.Passport_Update, passport);
     }
+
+    public async Task<Passport> GetByEmployeeIdAsync(int id)
+    {
+        using var connection = await _factory.CreateAsync();
+
+        var result = await connection.QueryAsync<Passport>(SqlProcedures.Passport_GetByEmployeeId, new Passport
+        {
+            EmployeeId = id
+        });
+
+        return result.FirstOrDefault();
+    }
 }
