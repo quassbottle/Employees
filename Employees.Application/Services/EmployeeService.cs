@@ -28,18 +28,18 @@ public class EmployeeService : IEmployeeService
             Number = employeeDto.Passport.Number,
         });
 
-        var departmentId = await _departmentRepository.CreateAsync(new Department
+        if (employeeDto.DepartmentId is not null &&
+            !await _departmentRepository.ExistsAsync(employeeDto.DepartmentId.Value))
         {
-            Name = employeeDto.Department.Name,
-            Phone = employeeDto.Department.Phone,
-        });
+            throw new DepartmentNotFoundException("Department with such id has not been found");
+        }
         
         return await _employeeRepository.CreateAsync(new Employee
         {
            Name = employeeDto.Name,
            Surname = employeeDto.Surname,
            CompanyId = employeeDto.CompanyId,
-           DepartmentId = departmentId,
+           DepartmentId = employeeDto.DepartmentId.Value,
            PassportId = passportId,
            Phone = employeeDto.Phone
         });
@@ -54,7 +54,6 @@ public class EmployeeService : IEmployeeService
             throw new EmployeeNotFoundException("Employee with such id has not been found");
         }
 
-        var department = await _departmentRepository.GetByIdAsync(candidate.DepartmentId);
         var passport = await _passportRepository.GetByIdAsync(candidate.PassportId);
 
         return new EmployeeDto
@@ -64,12 +63,7 @@ public class EmployeeService : IEmployeeService
             Surname = candidate.Surname,
             Phone = candidate.Phone,
             CompanyId = candidate.CompanyId,
-            Department = new DepartmentDto
-            {
-                Id = department.Id,
-                Phone = department.Phone,
-                Name = department.Name,
-            },
+            DepartmentId = candidate.DepartmentId,
             Passport = new PassportDto
             {
                 Id = passport.Id,
@@ -88,15 +82,6 @@ public class EmployeeService : IEmployeeService
             throw new EmployeeNotFoundException("Employee with such id has not been found");
         }
 
-        if (employeeDto.Department is not null)
-        {
-            await _departmentRepository.UpdateAsync(new Department
-            {
-                Name = employeeDto.Department.Name,
-                Phone = employeeDto.Department.Phone,
-            }, db.DepartmentId);
-        }
-
         if (employeeDto.Passport is not null)
         {
             await _passportRepository.UpdateAsync(new Passport
@@ -113,7 +98,7 @@ public class EmployeeService : IEmployeeService
             Surname = employeeDto.Surname,
             CompanyId = employeeDto.CompanyId,
             PassportId = db.PassportId,
-            DepartmentId = db.DepartmentId,
+            DepartmentId = employeeDto.DepartmentId ?? db.DepartmentId,
         }, id);
     }
 
@@ -128,16 +113,55 @@ public class EmployeeService : IEmployeeService
 
         await _employeeRepository.DeleteByIdAsync(id);
         await _passportRepository.DeleteByIdAsync(db.PassportId);
-        await _departmentRepository.DeleteByIdAsync(db.DepartmentId);
     }
     
-    public Task<IList<EmployeeDto>> GetAllByCompanyIdAsync(int id)
+    public async Task<IList<EmployeeDto>> GetAllByCompanyIdAsync(int id)
     {
-        throw new NotImplementedException();
+        var query = await _employeeRepository.GetAllByCompanyIdAsync(id);
+
+        return query.Select(async (employee) =>
+        {
+            var passport = await _passportRepository.GetByIdAsync(employee.PassportId);
+            return new EmployeeDto
+            {
+                Id = employee.Id,
+                Name = employee.Name,
+                Surname = employee.Surname,
+                CompanyId = employee.CompanyId,
+                DepartmentId = employee.DepartmentId,
+                Phone = employee.Phone,
+                Passport = new PassportDto
+                {
+                    Id = passport.Id,
+                    Number = passport.Number,
+                    Type = passport.Type,
+                },
+            };
+        }).Select(t => t.Result).ToList();
     }
 
-    public Task<IList<EmployeeDto>> GetAllByDepartmentIdAsync(int id)
+    public async Task<IList<EmployeeDto>> GetAllByDepartmentIdAsync(int id)
     {
-        throw new NotImplementedException();
+        var query = await _employeeRepository.GetAllByDepartmentIdAsync(id);
+        
+        return query.Select(async (employee) =>
+        {
+            var passport = await _passportRepository.GetByIdAsync(employee.PassportId);
+            return new EmployeeDto
+            {
+                Id = employee.Id,
+                Name = employee.Name,
+                Surname = employee.Surname,
+                CompanyId = employee.CompanyId,
+                DepartmentId = employee.DepartmentId,
+                Phone = employee.Phone,
+                Passport = new PassportDto
+                {
+                    Id = passport.Id,
+                    Number = passport.Number,
+                    Type = passport.Type,
+                },
+            };
+        }).Select(t => t.Result).ToList();
     }
 }

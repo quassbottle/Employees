@@ -1,8 +1,6 @@
-using System.Text.Json.Serialization;
+namespace Employees.Models;
 
-namespace Employees.Application.Dto;
-
-public class DepartmentDto
+public class DepartmentModel
 {
     public int Id { get; set; }
     public string Name { get; set; }

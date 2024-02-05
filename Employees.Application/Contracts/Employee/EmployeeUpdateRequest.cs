@@ -10,5 +10,5 @@ public class EmployeeUpdateRequest
     public string? Phone { get; set; }
     public int? CompanyId { get; set; }  
     public PassportUpdateRequest? Passport { get; set; }
-    public DepartmentUpdateRequest? Department { get; set; }
+    public int? DepartmentId { get; set; }
 }

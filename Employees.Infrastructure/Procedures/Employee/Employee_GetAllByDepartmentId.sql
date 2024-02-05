@@ -1,1 +1,1 @@
-select * from employees where department_id = @DepartmendId;
+select * from employees where department_id = @DepartmentId;

@@ -53,7 +53,7 @@ public class DepartmentController : Controller
             return BadRequest(new ExceptionResponse
             {
                 Status = 400,
-                Message = "Invalid parameters",
+                Message = "Bad parameters",
             });
         }
         

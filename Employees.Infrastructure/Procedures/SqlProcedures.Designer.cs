@@ -164,7 +164,7 @@ namespace Employees.Infrastructure.Procedures {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select * from employees where department_id = @DepartmendId;.
+        ///   Looks up a localized string similar to select * from employees where department_id = @DepartmentId;.
         /// </summary>
         internal static string Employee_GetAllByDepartmentId {
             get {
