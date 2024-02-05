@@ -124,17 +124,11 @@
   <data name="Passport_Delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Passport\Passport_Delete.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>
-  <data name="Passport_GetAll" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Passport\Passport_GetAll.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
-  </data>
   <data name="Passport_GetById" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Passport\Passport_GetById.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>
   <data name="Passport_Update" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Passport\Passport_Update.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
-  </data>
-  <data name="Passport_Exists" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Passport\Passport_Exists.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>
   <data name="Department_Create" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Department\Department_Create.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>

@@ -214,29 +214,11 @@ namespace Employees.Infrastructure.Procedures {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select count(1) from passports where id = @Id;.
-        /// </summary>
-        internal static string Passport_Exists {
-            get {
-                return ResourceManager.GetString("Passport_Exists", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to select count(1) from passports where number = @Number;.
         /// </summary>
         internal static string Passport_ExistsByNumber {
             get {
                 return ResourceManager.GetString("Passport_ExistsByNumber", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to select * from passports;.
-        /// </summary>
-        internal static string Passport_GetAll {
-            get {
-                return ResourceManager.GetString("Passport_GetAll", resourceCulture);
             }
         }
         

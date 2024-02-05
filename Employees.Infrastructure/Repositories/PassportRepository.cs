@@ -46,18 +46,6 @@ public class PassportRepository : IPassportRepository
         return result;
     }
 
-    public async Task<bool> ExistsAsync(int id)
-    {
-        using var connection = await _factory.CreateAsync();
-
-        var result = await connection.ExecuteScalarAsync<int>(SqlProcedures.Passport_Exists, new Passport
-        {
-            Id = id
-        });
-
-        return result > 0;
-    }
-
     public async Task<bool> ExistsByNumberAsync(string number)
     {
         using var connection = await _factory.CreateAsync();
@@ -77,14 +65,5 @@ public class PassportRepository : IPassportRepository
         passport.Id = id;
         
         await connection.ExecuteAsync(SqlProcedures.Passport_Update, passport);
-    }
-
-    public async Task<IList<Passport>> GetAllAsync()
-    {
-        using var connection = await _factory.CreateAsync();
-
-        var result = await connection.QueryAsync<Passport>(SqlProcedures.Passport_GetAll);
-
-        return result.ToList();
     }
 }
