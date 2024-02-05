@@ -49,6 +49,7 @@ public class EmployeeController : Controller
             },
             Department = new DepartmentModel
             {
+                Id = department.Id,
                 Name = department.Name,
                 Phone = department.Phone,
             },
