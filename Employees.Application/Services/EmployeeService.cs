@@ -3,6 +3,7 @@ using Employees.Application.Services.Interfaces;
 using Employees.Domain.Entities;
 using Employees.Domain.Exceptions.Department;
 using Employees.Domain.Exceptions.Employee;
+using Employees.Domain.Exceptions.Passport;
 using Employees.Domain.Repositories;
 
 namespace Employees.Application.Services;
@@ -27,22 +28,35 @@ public class EmployeeService : IEmployeeService
         {
             throw new DepartmentNotFoundException("Department with such id has not been found");
         }
-        
+
+        if (await _passportRepository.ExistsByNumberAsync(employeeDto.Passport.Number))
+        {
+            throw new PassportBadRequestException("Passport with such number already exists");
+        }
+
         var passportId = await _passportRepository.CreateAsync(new Passport
         {
             Type = employeeDto.Passport.Type,
             Number = employeeDto.Passport.Number,
         });
-        
-        return await _employeeRepository.CreateAsync(new Employee 
+
+        try
         {
-            Name = employeeDto.Name,
-            Surname = employeeDto.Surname,
-            CompanyId = employeeDto.CompanyId,
-            DepartmentId = employeeDto.DepartmentId.Value,
-            PassportId = passportId,
-            Phone = employeeDto.Phone
-        });
+            return await _employeeRepository.CreateAsync(new Employee
+            {
+                Name = employeeDto.Name,
+                Surname = employeeDto.Surname,
+                CompanyId = employeeDto.CompanyId,
+                DepartmentId = employeeDto.DepartmentId.Value,
+                PassportId = passportId,
+                Phone = employeeDto.Phone
+            });
+        }
+        catch
+        {
+            await _passportRepository.DeleteByIdAsync(passportId);
+            throw new EmployeeBadRequestException("Bad parameters");
+        }
     }
 
     public async Task<EmployeeDto> GetByIdAsync(int id)
@@ -81,10 +95,20 @@ public class EmployeeService : IEmployeeService
         {
             throw new EmployeeNotFoundException("Employee with such id has not been found");
         }
-
-        var passportUpdated = false;
+        
+        if (employeeDto.DepartmentId is not null &&
+            !await _departmentRepository.ExistsAsync(employeeDto.DepartmentId.Value))
+        {
+            throw new DepartmentNotFoundException("Department with such id does not exist");
+        }
+        
         if (employeeDto.Passport is not null)
         {
+            if (await _passportRepository.ExistsByNumberAsync(employeeDto.Passport.Number))
+            {
+                throw new PassportBadRequestException("Passport with such number already exists");
+            }
+            
             await _passportRepository.UpdateAsync(new Passport
             {
                 Type = employeeDto.Passport.Type,
@@ -92,26 +116,15 @@ public class EmployeeService : IEmployeeService
             }, dbEmployee.PassportId);
         }
 
-        try
+        await _employeeRepository.UpdateAsync(new Employee
         {
-            await _employeeRepository.UpdateAsync(new Employee
-            {
-                Name = employeeDto.Name,
-                Phone = employeeDto.Phone,
-                Surname = employeeDto.Surname,
-                CompanyId = employeeDto.CompanyId,
-                PassportId = dbEmployee.PassportId,
-                DepartmentId = employeeDto.DepartmentId ?? dbEmployee.DepartmentId,
-            }, id);
-        }
-        catch
-        {
-            if (passportUpdated)
-            {
-                
-            }
-            throw;
-        }
+            Name = employeeDto.Name,
+            Phone = employeeDto.Phone,
+            Surname = employeeDto.Surname,
+            CompanyId = employeeDto.CompanyId,
+            PassportId = dbEmployee.PassportId,
+            DepartmentId = employeeDto.DepartmentId ?? dbEmployee.DepartmentId,
+        }, id);
     }
 
     public async Task DeleteAsync(int id)
