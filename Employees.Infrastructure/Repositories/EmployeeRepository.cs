@@ -21,7 +21,7 @@ public class EmployeeRepository : IEmployeeRepository
 
         var result = await connection.QueryAsync<Employee>(SqlProcedures.Employee_GetById, new
         {
-            @Id = id
+            Id = id
         });
 
         return result.FirstOrDefault();

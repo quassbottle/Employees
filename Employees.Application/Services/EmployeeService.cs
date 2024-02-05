@@ -22,27 +22,35 @@ public class EmployeeService : IEmployeeService
     
     public async Task<int> CreateAsync(EmployeeDto employeeDto)
     {
-        var passportId = await _passportRepository.CreateAsync(new Passport
-        {
-            Type = employeeDto.Passport.Type,
-            Number = employeeDto.Passport.Number,
-        });
-
         if (employeeDto.DepartmentId is not null &&
             !await _departmentRepository.ExistsAsync(employeeDto.DepartmentId.Value))
         {
             throw new DepartmentNotFoundException("Department with such id has not been found");
         }
         
-        return await _employeeRepository.CreateAsync(new Employee
+        var passportId = await _passportRepository.CreateAsync(new Passport
         {
-           Name = employeeDto.Name,
-           Surname = employeeDto.Surname,
-           CompanyId = employeeDto.CompanyId,
-           DepartmentId = employeeDto.DepartmentId.Value,
-           PassportId = passportId,
-           Phone = employeeDto.Phone
+            Type = employeeDto.Passport.Type,
+            Number = employeeDto.Passport.Number,
         });
+        
+        try
+        {
+            return await _employeeRepository.CreateAsync(new Employee
+            {
+                Name = employeeDto.Name,
+                Surname = employeeDto.Surname,
+                CompanyId = employeeDto.CompanyId,
+                DepartmentId = employeeDto.DepartmentId.Value,
+                PassportId = passportId,
+                Phone = employeeDto.Phone
+            });
+        }
+        catch
+        {
+            await _passportRepository.DeleteByIdAsync(passportId);
+            throw;
+        }
     }
 
     public async Task<EmployeeDto> GetByIdAsync(int id)
@@ -75,31 +83,43 @@ public class EmployeeService : IEmployeeService
 
     public async Task UpdateAsync(EmployeeDto employeeDto, int id)
     {
-        var db = await _employeeRepository.GetByIdAsync(id);
+        var dbEmployee = await _employeeRepository.GetByIdAsync(id);
         
-        if (db is null)
+        if (dbEmployee is null)
         {
             throw new EmployeeNotFoundException("Employee with such id has not been found");
         }
 
+        var passportUpdated = false;
         if (employeeDto.Passport is not null)
         {
             await _passportRepository.UpdateAsync(new Passport
             {
                 Type = employeeDto.Passport.Type,
                 Number = employeeDto.Passport.Number,
-            }, db.PassportId);
+            }, dbEmployee.PassportId);
         }
 
-        await _employeeRepository.UpdateAsync(new Employee
+        try
         {
-            Name = employeeDto.Name,
-            Phone = employeeDto.Phone,
-            Surname = employeeDto.Surname,
-            CompanyId = employeeDto.CompanyId,
-            PassportId = db.PassportId,
-            DepartmentId = employeeDto.DepartmentId ?? db.DepartmentId,
-        }, id);
+            await _employeeRepository.UpdateAsync(new Employee
+            {
+                Name = employeeDto.Name,
+                Phone = employeeDto.Phone,
+                Surname = employeeDto.Surname,
+                CompanyId = employeeDto.CompanyId,
+                PassportId = dbEmployee.PassportId,
+                DepartmentId = employeeDto.DepartmentId ?? dbEmployee.DepartmentId,
+            }, id);
+        }
+        catch
+        {
+            if (passportUpdated)
+            {
+                
+            }
+            throw;
+        }
     }
 
     public async Task DeleteAsync(int id)
@@ -137,7 +157,7 @@ public class EmployeeService : IEmployeeService
                     Type = passport.Type,
                 },
             };
-        }).Select(t => t.Result).ToList();
+        }).Select(t => t.Result as EmployeeDto).ToList();
     }
 
     public async Task<IList<EmployeeDto>> GetAllByDepartmentIdAsync(int id)
@@ -162,6 +182,6 @@ public class EmployeeService : IEmployeeService
                     Type = passport.Type,
                 },
             };
-        }).Select(t => t.Result).ToList();
+        }).Select(t => t.Result as EmployeeDto).ToList();
     }
 }

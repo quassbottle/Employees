@@ -155,7 +155,9 @@ namespace Employees.Infrastructure.Procedures {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select * from employees where company_id = @CompanyId;.
+        ///   Looks up a localized string similar to select e.id, e.name, e.surname, e.phone, e.company_id as CompanyId, e.department_id as DepartmentId, e.passport_id as PassportId 
+        ///from employees e
+        ///where company_id = @CompanyId;.
         /// </summary>
         internal static string Employee_GetAllByCompanyId {
             get {
@@ -164,7 +166,9 @@ namespace Employees.Infrastructure.Procedures {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select * from employees where department_id = @DepartmentId;.
+        ///   Looks up a localized string similar to select e.id, e.name, e.surname, e.phone, e.company_id as CompanyId, e.department_id as DepartmentId, e.passport_id as PassportId
+        ///from employees e
+        ///where department_id = @DepartmentId;.
         /// </summary>
         internal static string Employee_GetAllByDepartmentId {
             get {
