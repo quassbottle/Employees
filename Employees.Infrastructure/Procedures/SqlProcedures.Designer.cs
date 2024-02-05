@@ -195,15 +195,6 @@ namespace Employees.Infrastructure.Procedures {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to delete from passports where id = @Id;.
-        /// </summary>
-        internal static string Passport_Delete {
-            get {
-                return ResourceManager.GetString("Passport_Delete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to select count(1) from passports where number = @Number and type = @Type;.
         /// </summary>
         internal static string Passport_ExistsByNumberAndType {
@@ -218,15 +209,6 @@ namespace Employees.Infrastructure.Procedures {
         internal static string Passport_GetByEmployeeId {
             get {
                 return ResourceManager.GetString("Passport_GetByEmployeeId", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to select p.id, p.number, p.type, p.employee_id from passports p where id = @Id;.
-        /// </summary>
-        internal static string Passport_GetById {
-            get {
-                return ResourceManager.GetString("Passport_GetById", resourceCulture);
             }
         }
         
