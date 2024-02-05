@@ -163,9 +163,6 @@
   <data name="Employee_Exists" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Employee\Employee_Exists.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>
-  <data name="Employee_GetAll" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Employee\Employee_GetAll.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
-  </data>
   <data name="Employee_GetAllByCompanyId" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Employee\Employee_GetAllByCompanyId.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>
