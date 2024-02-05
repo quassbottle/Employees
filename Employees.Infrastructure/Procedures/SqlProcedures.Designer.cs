@@ -137,15 +137,6 @@ namespace Employees.Infrastructure.Procedures {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select count(1) from employees where id = @Id;.
-        /// </summary>
-        internal static string Employee_Exists {
-            get {
-                return ResourceManager.GetString("Employee_Exists", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to select e.id, e.name, e.surname, e.phone, e.company_id as CompanyId, e.department_id as DepartmentId, e.passport_id as PassportId 
         ///from employees e
         ///where company_id = @CompanyId;.

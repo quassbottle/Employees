@@ -46,18 +46,6 @@ public class EmployeeRepository : IEmployeeRepository
         return result;
     }
 
-    public async Task<bool> ExistsAsync(int id)
-    {
-        using var connection = await _factory.CreateAsync();
-
-        var result = await connection.ExecuteScalarAsync<int>(SqlProcedures.Employee_Exists, new Employee
-        {
-            Id = id
-        });
-
-        return result > 0;
-    }
-
     public async Task UpdateAsync(Employee employee, int id)
     {
         using var connection = await _factory.CreateAsync();
