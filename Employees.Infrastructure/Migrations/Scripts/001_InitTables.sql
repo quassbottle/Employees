@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS employees (
     surname text,
     phone varchar(16),
     company_id int,
-    department_id serial references departments(id) on delete cascade on update cascade
+    department_id int references departments(id) on delete cascade on update cascade
 );
 
 CREATE TABLE IF NOT EXISTS passports (
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS passports (
     type text,
     number text,
     constraint unique_type_number unique (type, number),
-    employee_id serial unique references employees(id) on delete cascade on update cascade
+    employee_id int unique references employees(id) on delete cascade on update cascade
 );
 
 CREATE INDEX ON employees(company_id);
