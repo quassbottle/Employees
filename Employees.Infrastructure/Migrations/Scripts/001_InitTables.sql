@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS passports (
     id serial PRIMARY KEY,
     type text,
-    phone text
+    number text
 );
 
 CREATE TABLE IF NOT EXISTS departments (

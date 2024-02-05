@@ -19,9 +19,9 @@ public class EmployeeRepository : IEmployeeRepository
     {
         using var connection = await _factory.CreateAsync();
 
-        var result = await connection.QueryAsync<Employee>(SqlProcedures.Employee_GetById, new Employee
+        var result = await connection.QueryAsync<Employee>(SqlProcedures.Employee_GetById, new
         {
-            Id = id
+            @Id = id
         });
 
         return result.FirstOrDefault();

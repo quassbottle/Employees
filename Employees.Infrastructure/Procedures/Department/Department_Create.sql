@@ -1,1 +1,1 @@
-insert into departments(name, phone) values (@Name, @Phone);
+insert into departments(name, phone) values (@Name, @Phone) returning id;

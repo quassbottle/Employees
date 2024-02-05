@@ -1,9 +1,10 @@
 using System.Text.Json.Serialization;
 
-namespace Employees.Domain.Entities;
+namespace Employees.Application.Dto;
 
-public class Passport
+public class PassportDto
 {
+    [JsonIgnore]
     public int Id { get; set; }
     public string Type { get; set; }
     public string Number { get; set; }

@@ -1,9 +1,10 @@
 using System.Text.Json.Serialization;
 
-namespace Employees.Domain.Entities;
+namespace Employees.Application.Dto;
 
-public class Department
+public class DepartmentDto
 {
+    [JsonIgnore]
     public int Id { get; set; }
     public string Name { get; set; }
     public string Phone { get; set; }
