@@ -34,23 +34,15 @@ public class EmployeeService : IEmployeeService
             Number = employeeDto.Passport.Number,
         });
         
-        try
+        return await _employeeRepository.CreateAsync(new Employee 
         {
-            return await _employeeRepository.CreateAsync(new Employee
-            {
-                Name = employeeDto.Name,
-                Surname = employeeDto.Surname,
-                CompanyId = employeeDto.CompanyId,
-                DepartmentId = employeeDto.DepartmentId.Value,
-                PassportId = passportId,
-                Phone = employeeDto.Phone
-            });
-        }
-        catch
-        {
-            await _passportRepository.DeleteByIdAsync(passportId);
-            throw;
-        }
+            Name = employeeDto.Name,
+            Surname = employeeDto.Surname,
+            CompanyId = employeeDto.CompanyId,
+            DepartmentId = employeeDto.DepartmentId.Value,
+            PassportId = passportId,
+            Phone = employeeDto.Phone
+        });
     }
 
     public async Task<EmployeeDto> GetByIdAsync(int id)
@@ -157,7 +149,7 @@ public class EmployeeService : IEmployeeService
                     Type = passport.Type,
                 },
             };
-        }).Select(t => t.Result as EmployeeDto).ToList();
+        }).Select(t => t.Result).ToList();
     }
 
     public async Task<IList<EmployeeDto>> GetAllByDepartmentIdAsync(int id)
@@ -182,6 +174,6 @@ public class EmployeeService : IEmployeeService
                     Type = passport.Type,
                 },
             };
-        }).Select(t => t.Result as EmployeeDto).ToList();
+        }).Select(t => t.Result).ToList();
     }
 }

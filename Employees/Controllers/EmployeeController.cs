@@ -154,7 +154,7 @@ public class EmployeeController : Controller
                     Phone = department.Phone,
                 },
             };
-        }));   
+        }).Select(t => t.Result));   
     }
 
     private async Task<IActionResult> GetAllByDepartmentId(int departmentId)
@@ -183,6 +183,6 @@ public class EmployeeController : Controller
                     Phone = department.Phone,
                 },
             };
-        }));
+        }).Select(t => t.Result));
     }
 }
