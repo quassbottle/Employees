@@ -18,10 +18,63 @@ public class EmployeeController : Controller
         _service = service;
     }
 
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteById(int id)
+    {
+        await _service.DeleteAsync(id);
+        return Ok();
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
         return Ok(await _service.GetByIdAsync(id));
+    }
+
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> Update(EmployeeUpdateRequest dto, int id)
+    {
+        if (dto.Phone is null && dto.Name is null && dto.Surname is null && dto.CompanyId is null &&
+            dto.Department is null && dto.Passport is null)
+        {
+            return BadRequest(new ExceptionResponse
+            {
+                Status = 400,
+                Message = "Bad parameters",
+            });
+        }
+
+        var department = new DepartmentDto();
+        if (dto.Department is not null)
+        {
+            department = new DepartmentDto
+            {
+                Name = dto.Department.Name,
+                Phone = dto.Department.Phone,
+            };
+        }
+
+        var passport = new PassportDto();
+        if (dto.Passport is not null)
+        {
+            passport = new PassportDto
+            {
+                Number = dto.Passport.Number,
+                Type = dto.Passport.Type,
+            };
+        }
+        
+        await _service.UpdateAsync(new EmployeeDto
+        {
+            Name = dto.Name,
+            Surname = dto.Surname,
+            Phone = dto.Phone,
+            Passport = passport,
+            CompanyId = dto.CompanyId,
+            Department = department,
+        }, id);
+        
+        return Ok();
     }
 
     [HttpPost]

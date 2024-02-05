@@ -1,4 +1,4 @@
 update passports set
                      type = coalesce(@Type, type),
-                     phone = coalesce(@Phone, phone)
+                     number = coalesce(@Number, number)
 where id = @Id;

@@ -22,13 +22,13 @@ public class EmployeeService : IEmployeeService
     
     public async Task<int> CreateAsync(EmployeeDto employeeDto)
     {
-        int passportId = await _passportRepository.CreateAsync(new Passport
+        var passportId = await _passportRepository.CreateAsync(new Passport
         {
             Type = employeeDto.Passport.Type,
             Number = employeeDto.Passport.Number,
         });
 
-        int departmentId = await _departmentRepository.CreateAsync(new Department
+        var departmentId = await _departmentRepository.CreateAsync(new Department
         {
             Name = employeeDto.Department.Name,
             Phone = employeeDto.Department.Phone,
@@ -87,36 +87,48 @@ public class EmployeeService : IEmployeeService
         {
             throw new EmployeeNotFoundException("Employee with such id has not been found");
         }
-        
-        await _departmentRepository.UpdateAsync(new Department
-        {
-            Name = employeeDto.Department.Name,
-            Phone = employeeDto.Department.Phone,
-        }, db.DepartmentId);
 
-        await _passportRepository.UpdateAsync(new Passport
+        if (employeeDto.Department is not null)
         {
-            Type = employeeDto.Passport.Type,
-            Number = employeeDto.Passport.Number,
-        }, db.PassportId);
-        
+            await _departmentRepository.UpdateAsync(new Department
+            {
+                Name = employeeDto.Department.Name,
+                Phone = employeeDto.Department.Phone,
+            }, db.DepartmentId);
+        }
+
+        if (employeeDto.Passport is not null)
+        {
+            await _passportRepository.UpdateAsync(new Passport
+            {
+                Type = employeeDto.Passport.Type,
+                Number = employeeDto.Passport.Number,
+            }, db.PassportId);
+        }
+
         await _employeeRepository.UpdateAsync(new Employee
         {
             Name = employeeDto.Name,
             Phone = employeeDto.Phone,
             Surname = employeeDto.Surname,
             CompanyId = employeeDto.CompanyId,
+            PassportId = db.PassportId,
+            DepartmentId = db.DepartmentId,
         }, id);
     }
 
     public async Task DeleteAsync(int id)
     {
-        if (!await _employeeRepository.ExistsAsync(id))
+        var db = await _employeeRepository.GetByIdAsync(id);
+        
+        if (db is null)
         {
             throw new EmployeeNotFoundException("Employee with such id has not been found");
         }
 
         await _employeeRepository.DeleteByIdAsync(id);
+        await _passportRepository.DeleteByIdAsync(db.PassportId);
+        await _departmentRepository.DeleteByIdAsync(db.DepartmentId);
     }
     
     public Task<IList<EmployeeDto>> GetAllByCompanyIdAsync(int id)

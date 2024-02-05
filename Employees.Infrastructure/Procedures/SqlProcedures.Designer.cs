@@ -248,7 +248,7 @@ namespace Employees.Infrastructure.Procedures {
         /// <summary>
         ///   Looks up a localized string similar to update passports set
         ///                     type = coalesce(@Type, type),
-        ///                     phone = coalesce(@Phone, phone)
+        ///                     number = coalesce(@Number, number)
         ///where id = @Id;.
         /// </summary>
         internal static string Passport_Update {
