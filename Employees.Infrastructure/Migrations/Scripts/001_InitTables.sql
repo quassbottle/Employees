@@ -18,5 +18,5 @@ CREATE TABLE IF NOT EXISTS employees (
     phone varchar(16),
     company_id int,
     passport_id serial references passports(id),
-    department_id serial references departments(id)
+    department_id serial references departments(id) on delete cascade on update cascade
 );
