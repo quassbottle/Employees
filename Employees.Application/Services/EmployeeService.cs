@@ -42,14 +42,22 @@ public class EmployeeService : IEmployeeService
             DepartmentId = employeeDto.DepartmentId.Value,
             Phone = employeeDto.Phone
         });
-        
-        await _passportRepository.CreateAsync(new Passport
+
+        try
         {
-            Type = employeeDto.Passport.Type,
-            Number = employeeDto.Passport.Number,
-            EmployeeId = employeeId,
-        });
-        
+            await _passportRepository.CreateAsync(new Passport
+            {
+                Type = employeeDto.Passport.Type,
+                Number = employeeDto.Passport.Number,
+                EmployeeId = employeeId,
+            });
+        }
+        catch
+        {
+            await _employeeRepository.DeleteByIdAsync(employeeId);
+            throw new PassportBadRequestException("Bad parameters");
+        }
+
         return employeeId;
     }
 
@@ -95,21 +103,6 @@ public class EmployeeService : IEmployeeService
         {
             throw new DepartmentNotFoundException("Department with such id does not exist");
         }
-        
-        if (employeeDto.Passport is not null)
-        {
-            if (await _passportRepository.ExistsByNumberAndTypeAsync(employeeDto.Passport.Number, employeeDto.Passport.Type))
-            {
-                throw new PassportBadRequestException("Passport with such number already exists");
-            }
-
-            var candidatePassport = await _passportRepository.GetByEmployeeIdAsync(id);
-            await _passportRepository.UpdateAsync(new Passport
-            {
-                Type = employeeDto.Passport.Type,
-                Number = employeeDto.Passport.Number,
-            }, candidatePassport.Id);
-        }
 
         await _employeeRepository.UpdateAsync(new Employee
         {
@@ -119,6 +112,30 @@ public class EmployeeService : IEmployeeService
             CompanyId = employeeDto.CompanyId,
             DepartmentId = employeeDto.DepartmentId ?? dbEmployee.DepartmentId,
         }, id);
+        
+        if (employeeDto.Passport is not null)
+        {
+            if (await _passportRepository.ExistsByNumberAndTypeAsync(employeeDto.Passport.Number, employeeDto.Passport.Type))
+            {
+                throw new PassportBadRequestException("Passport with such number already exists");
+            }
+
+            var candidatePassport = await _passportRepository.GetByEmployeeIdAsync(id);
+
+            try
+            {
+                await _passportRepository.UpdateAsync(new Passport
+                {
+                    Type = employeeDto.Passport.Type,
+                    Number = employeeDto.Passport.Number,
+                }, candidatePassport.Id);
+            }
+            catch
+            {
+                await _employeeRepository.UpdateAsync(dbEmployee, id);
+                throw new PassportBadRequestException("Bad parameters");
+            }
+        }
     }
 
     public async Task DeleteAsync(int id)
