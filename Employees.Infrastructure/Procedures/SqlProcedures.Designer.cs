@@ -205,11 +205,11 @@ namespace Employees.Infrastructure.Procedures {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select count(1) from passports where number = @Number;.
+        ///   Looks up a localized string similar to select count(1) from passports where number = @Number and type = @Type;.
         /// </summary>
-        internal static string Passport_ExistsByNumber {
+        internal static string Passport_ExistsByNumberAndType {
             get {
-                return ResourceManager.GetString("Passport_ExistsByNumber", resourceCulture);
+                return ResourceManager.GetString("Passport_ExistsByNumberAndType", resourceCulture);
             }
         }
         

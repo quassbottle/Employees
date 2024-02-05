@@ -29,7 +29,7 @@ public class EmployeeService : IEmployeeService
             throw new DepartmentNotFoundException("Department with such id has not been found");
         }
 
-        if (await _passportRepository.ExistsByNumberAsync(employeeDto.Passport.Number))
+        if (await _passportRepository.ExistsByNumberAndTypeAsync(employeeDto.Passport.Number, employeeDto.Passport.Type))
         {
             throw new PassportBadRequestException("Passport with such number already exists");
         }
@@ -104,7 +104,7 @@ public class EmployeeService : IEmployeeService
         
         if (employeeDto.Passport is not null)
         {
-            if (await _passportRepository.ExistsByNumberAsync(employeeDto.Passport.Number))
+            if (await _passportRepository.ExistsByNumberAndTypeAsync(employeeDto.Passport.Number, employeeDto.Passport.Type))
             {
                 throw new PassportBadRequestException("Passport with such number already exists");
             }

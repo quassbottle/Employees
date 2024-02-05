@@ -46,13 +46,14 @@ public class PassportRepository : IPassportRepository
         return result;
     }
 
-    public async Task<bool> ExistsByNumberAsync(string number)
+    public async Task<bool> ExistsByNumberAndTypeAsync(string number, string type)
     {
         using var connection = await _factory.CreateAsync();
 
-        var result = await connection.ExecuteScalarAsync<int>(SqlProcedures.Passport_ExistsByNumber, new Passport
+        var result = await connection.ExecuteScalarAsync<int>(SqlProcedures.Passport_ExistsByNumberAndType, new Passport
         {
-            Number = number
+            Number = number,
+            Type = type,
         });
 
         return result > 0;

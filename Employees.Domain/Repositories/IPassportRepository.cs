@@ -7,6 +7,6 @@ public interface IPassportRepository
     Task<Passport> GetByIdAsync(int id);
     Task DeleteByIdAsync(int id);
     Task<int> CreateAsync(Passport passport);
-    Task<bool> ExistsByNumberAsync(string number);
+    Task<bool> ExistsByNumberAndTypeAsync(string number, string type);
     Task UpdateAsync(Passport passport, int id);
 }

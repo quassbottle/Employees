@@ -1,1 +1,0 @@
-select count(1) from passports where number = @Number;
