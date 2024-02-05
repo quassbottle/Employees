@@ -4,10 +4,10 @@ namespace Employees.Domain.Repositories;
 
 public interface IEmployeeRepository
 {
-    public Task<Employee> GetByIdAsync(int id);
-    public Task DeleteByIdAsync(int id);
-    public Task<int> CreateAsync(Employee employee);
-    public Task UpdateAsync(Employee employee, int id);
-    public Task<IList<Employee>> GetAllByCompanyIdAsync(int companyId);
-    public Task<IList<Employee>> GetAllByDepartmentIdAsync(int departmentId);
+    Task<Employee> GetByIdAsync(int id);
+    Task DeleteByIdAsync(int id);
+    Task<int> CreateAsync(Employee employee);
+    Task UpdateAsync(Employee employee, int id);
+    Task<IList<Employee>> GetAllByCompanyIdAsync(int companyId);
+    Task<IList<Employee>> GetAllByDepartmentIdAsync(int departmentId);
 }

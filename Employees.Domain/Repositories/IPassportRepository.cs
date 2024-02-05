@@ -4,9 +4,9 @@ namespace Employees.Domain.Repositories;
 
 public interface IPassportRepository 
 {
-    public Task<Passport> GetByIdAsync(int id);
-    public Task DeleteByIdAsync(int id);
-    public Task<int> CreateAsync(Passport passport);
-    public Task<bool> ExistsByNumberAsync(string number);
-    public Task UpdateAsync(Passport passport, int id);
+    Task<Passport> GetByIdAsync(int id);
+    Task DeleteByIdAsync(int id);
+    Task<int> CreateAsync(Passport passport);
+    Task<bool> ExistsByNumberAsync(string number);
+    Task UpdateAsync(Passport passport, int id);
 }

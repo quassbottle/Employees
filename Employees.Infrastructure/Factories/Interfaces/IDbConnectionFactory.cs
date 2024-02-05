@@ -4,5 +4,5 @@ namespace Employees.Infrastructure.Factories.Interfaces;
 
 public interface IDbConnectionFactory
 {
-    public Task<IDbConnection> CreateAsync();
+    Task<IDbConnection> CreateAsync();
 }
