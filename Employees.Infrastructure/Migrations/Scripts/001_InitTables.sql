@@ -1,7 +1,8 @@
 CREATE TABLE IF NOT EXISTS passports (
     id serial primary key,
     type text,
-    number text unique 
+    number text,
+    constraint unique_type_number unique (type, number)
 );
 
 CREATE TABLE IF NOT EXISTS departments (
