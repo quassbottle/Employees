@@ -31,7 +31,7 @@ public class PassportRepository : IPassportRepository
         var result = await connection.ExecuteScalarAsync<int>(SqlProcedures.Passport_ExistsByNumberAndType, new Passport
         {
             Number = number,
-            Type = type,
+            Type = type
         });
 
         return result > 0;

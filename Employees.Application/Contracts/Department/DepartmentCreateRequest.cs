@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Employees.Application.Dto;
+namespace Employees.Application.Contracts.Department;
 
 public class DepartmentCreateRequest
 {

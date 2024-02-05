@@ -1,9 +1,8 @@
-using System.Reflection.Metadata;
 using Employees.Application.Contracts.Employee;
 using Employees.Application.Contracts.Shared;
 using Employees.Application.Dto;
+using Employees.Application.Models;
 using Employees.Application.Services.Interfaces;
-using Employees.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Employees.Controllers;
@@ -45,14 +44,14 @@ public class EmployeeController : Controller
             Passport = new PassportModel
             {
                 Number = candidate.Passport.Number,
-                Type = candidate.Passport.Type,
+                Type = candidate.Passport.Type
             },
             Department = new DepartmentModel
             {
                 Id = department.Id,
                 Name = department.Name,
-                Phone = department.Phone,
-            },
+                Phone = department.Phone
+            }
         });
     }
 
@@ -65,7 +64,7 @@ public class EmployeeController : Controller
             return BadRequest(new ExceptionResponse
             {
                 Status = 400,
-                Message = "Bad parameters",
+                Message = "Bad parameters"
             });
         }
 
@@ -75,7 +74,7 @@ public class EmployeeController : Controller
             passport = new PassportDto
             {
                 Number = dto.Passport.Number,
-                Type = dto.Passport.Type,
+                Type = dto.Passport.Type
             };
         }
         
@@ -86,7 +85,7 @@ public class EmployeeController : Controller
             Phone = dto.Phone,
             Passport = passport,
             CompanyId = dto.CompanyId,
-            DepartmentId = dto.DepartmentId,
+            DepartmentId = dto.DepartmentId
         }, id);
         
         return Ok();
@@ -105,7 +104,7 @@ public class EmployeeController : Controller
             Passport = new PassportDto
             {
                 Number = dto.Passport.Number,
-                Type = dto.Passport.Type,
+                Type = dto.Passport.Type
             }
         }));
     }
@@ -125,7 +124,7 @@ public class EmployeeController : Controller
         return BadRequest(new ExceptionResponse
         {
             Status = 400,
-            Message = "Bad parameters",
+            Message = "Bad parameters"
         });
     }
 
@@ -133,7 +132,7 @@ public class EmployeeController : Controller
     { 
         var response = await _employeeService.GetAllByCompanyIdAsync(companyId);
 
-        return Ok(response.Select(async (employee) =>
+        return Ok(response.Select(async employee =>
         {
             var department = await _departmentService.GetByIdAsync(employee.DepartmentId!.Value);
             return new EmployeeModel
@@ -153,7 +152,7 @@ public class EmployeeController : Controller
                     Id = department.Id,
                     Name = department.Name,
                     Phone = department.Phone,
-                },
+                }
             };
         }).Select(t => t.Result));   
     }
@@ -162,7 +161,7 @@ public class EmployeeController : Controller
     {
         var response = await _employeeService.GetAllByDepartmentIdAsync(departmentId);
 
-        return Ok(response.Select(async (employee) =>
+        return Ok(response.Select(async employee =>
         {
             var department = await _departmentService.GetByIdAsync(employee.DepartmentId!.Value);
             return new EmployeeModel
@@ -182,7 +181,7 @@ public class EmployeeController : Controller
                     Id = department.Id,
                     Name = department.Name,
                     Phone = department.Phone,
-                },
+                }
             };
         }).Select(t => t.Result));
     }

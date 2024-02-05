@@ -20,7 +20,7 @@ public class DepartmentService : IDepartmentService
         return await _repository.CreateAsync(new Department
         {
             Name = departmentDto.Name,
-            Phone = departmentDto.Phone,
+            Phone = departmentDto.Phone
         });
     }
 
@@ -37,7 +37,7 @@ public class DepartmentService : IDepartmentService
         {
             Id = candidate.Id,
             Name = candidate.Name,
-            Phone = candidate.Phone,
+            Phone = candidate.Phone
         };
     }
 
@@ -73,7 +73,7 @@ public class DepartmentService : IDepartmentService
         {
             Id = department.Id,
             Name = department.Name,
-            Phone = department.Phone,
+            Phone = department.Phone
         }).ToList();
     }
 }

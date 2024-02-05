@@ -19,7 +19,7 @@ public static class HostMigrationExtensions
 
         logger.LogInformation("Migrating database...");
 
-        string connection = configuration.GetConnectionString("Default");
+        var connection = configuration.GetConnectionString("Default");
 
         if (connection is null)
         {

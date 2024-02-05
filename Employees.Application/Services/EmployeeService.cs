@@ -49,7 +49,7 @@ public class EmployeeService : IEmployeeService
             {
                 Type = employeeDto.Passport.Type,
                 Number = employeeDto.Passport.Number,
-                EmployeeId = employeeId,
+                EmployeeId = employeeId
             });
         }
         catch
@@ -84,8 +84,8 @@ public class EmployeeService : IEmployeeService
             {
                 Id = passport.Id,
                 Type = passport.Type,
-                Number = passport.Number,
-            },
+                Number = passport.Number
+            }
         };
     }
 
@@ -110,7 +110,7 @@ public class EmployeeService : IEmployeeService
             Phone = employeeDto.Phone,
             Surname = employeeDto.Surname,
             CompanyId = employeeDto.CompanyId,
-            DepartmentId = employeeDto.DepartmentId ?? dbEmployee.DepartmentId,
+            DepartmentId = employeeDto.DepartmentId ?? dbEmployee.DepartmentId
         }, id);
         
         if (employeeDto.Passport is not null)
@@ -127,7 +127,7 @@ public class EmployeeService : IEmployeeService
                 await _passportRepository.UpdateAsync(new Passport
                 {
                     Type = employeeDto.Passport.Type,
-                    Number = employeeDto.Passport.Number,
+                    Number = employeeDto.Passport.Number
                 }, candidatePassport.Id);
             }
             catch
@@ -154,7 +154,7 @@ public class EmployeeService : IEmployeeService
     {
         var query = await _employeeRepository.GetAllByCompanyIdAsync(id);
 
-        return query.Select(async (employee) =>
+        return query.Select(async employee =>
         {
             var passport = await _passportRepository.GetByEmployeeIdAsync(employee.Id);
             return new EmployeeDto
@@ -169,8 +169,8 @@ public class EmployeeService : IEmployeeService
                 {
                     Id = passport.Id,
                     Number = passport.Number,
-                    Type = passport.Type,
-                },
+                    Type = passport.Type
+                }
             };
         }).Select(t => t.Result).ToList();
     }
@@ -179,7 +179,7 @@ public class EmployeeService : IEmployeeService
     {
         var query = await _employeeRepository.GetAllByDepartmentIdAsync(id);
         
-        return query.Select(async (employee) =>
+        return query.Select(async employee =>
         {
             var passport = await _passportRepository.GetByEmployeeIdAsync(employee.Id);
             return new EmployeeDto
@@ -194,8 +194,8 @@ public class EmployeeService : IEmployeeService
                 {
                     Id = passport.Id,
                     Number = passport.Number,
-                    Type = passport.Type,
-                },
+                    Type = passport.Type
+                }
             };
         }).Select(t => t.Result).ToList();
     }

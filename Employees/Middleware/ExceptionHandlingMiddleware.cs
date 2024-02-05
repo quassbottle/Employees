@@ -41,7 +41,7 @@ public class ExceptionHandlingMiddleware : IMiddleware
         var response = new ExceptionResponse
         {
             Status = httpContext.Response.StatusCode,
-            Message = exception.Message,
+            Message = exception.Message
         };
 
         await httpContext.Response.WriteAsync(JsonSerializer.Serialize(response));

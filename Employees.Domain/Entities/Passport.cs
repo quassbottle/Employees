@@ -1,5 +1,3 @@
-using System.Text.Json.Serialization;
-
 namespace Employees.Domain.Entities;
 
 public class Passport

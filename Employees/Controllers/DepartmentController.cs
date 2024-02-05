@@ -1,3 +1,4 @@
+using Employees.Application.Contracts.Department;
 using Employees.Application.Contracts.Shared;
 using Employees.Application.Dto;
 using Employees.Application.Services.Interfaces;
@@ -34,7 +35,7 @@ public class DepartmentController : Controller
         return Ok(await _service.CreateAsync(new DepartmentDto
         {
             Name = dto.Name,
-            Phone = dto.Phone,
+            Phone = dto.Phone
         }));
     }
 
@@ -53,14 +54,14 @@ public class DepartmentController : Controller
             return BadRequest(new ExceptionResponse
             {
                 Status = 400,
-                Message = "Bad parameters",
+                Message = "Bad parameters"
             });
         }
         
         await _service.UpdateAsync(new DepartmentDto
         {
             Name = dto.Name,
-            Phone = dto.Phone,
+            Phone = dto.Phone
         }, id);
         
         return Ok();

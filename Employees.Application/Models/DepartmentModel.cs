@@ -1,4 +1,4 @@
-namespace Employees.Models;
+namespace Employees.Application.Models;
 
 public class DepartmentModel
 {

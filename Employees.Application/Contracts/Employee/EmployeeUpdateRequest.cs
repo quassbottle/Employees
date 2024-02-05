@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using Employees.Application.Contracts.Passport;
-using Employees.Application.Dto;
 
 namespace Employees.Application.Contracts.Employee;
 

@@ -13,7 +13,7 @@ public class DepartmentRepository : IDepartmentRepository
     
     public DepartmentRepository(IDbConnectionFactory factory)
     {
-        this._factory = factory;
+        _factory = factory;
     }
     
     public async Task<Department> GetByIdAsync(int id)
