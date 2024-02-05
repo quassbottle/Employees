@@ -29,11 +29,9 @@
       <None Remove="Procedures\Passport\Passport_Create.sql" />
       <Resource Include="Procedures\Passport\Passport_Create.sql" />
       <None Remove="Procedures\Passport\Passport_Delete.sql" />
-      <Resource Include="Procedures\Passport\Passport_Delete.sql" />
       <None Remove="Procedures\Passport\Passport_GetAll.sql" />
       <Resource Include="Procedures\Passport\Passport_GetAll.sql" />
       <None Remove="Procedures\Passport\Passport_GetById.sql" />
-      <Resource Include="Procedures\Passport\Passport_GetById.sql" />
       <None Remove="Procedures\Passport\Passport_Update.sql" />
       <Resource Include="Procedures\Passport\Passport_Update.sql" />
     </ItemGroup>

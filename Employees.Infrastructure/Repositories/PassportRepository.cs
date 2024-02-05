@@ -14,28 +14,6 @@ public class PassportRepository : IPassportRepository
     {
         _factory = factory;
     }
-    
-    public async Task<Passport> GetByIdAsync(int id)
-    {
-        using var connection = await _factory.CreateAsync();
-
-        var result = await connection.QueryAsync<Passport>(SqlProcedures.Passport_GetById, new Passport
-        {
-            Id = id
-        });
-
-        return result.FirstOrDefault();
-    }
-
-    public async Task DeleteByIdAsync(int id)
-    {
-        using var connection = await _factory.CreateAsync();
-
-        await connection.ExecuteAsync(SqlProcedures.Passport_Delete, new Passport
-        {
-            Id = id
-        });
-    }
 
     public async Task<int> CreateAsync(Passport passport)
     {
